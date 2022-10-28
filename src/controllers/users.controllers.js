@@ -2,6 +2,8 @@ const bcrypt = require('bcrypt');
 const { Users } = require('../db');
 
 const allUsers = async (req, res) => {
+    console.log(res)
+    console.log(res.cookie.ftoken)
     try {
         const allUser = await Users.findAll()
         res.status(200).json({
@@ -29,7 +31,11 @@ const createUser = async (req, res) => {
         })
         res.status(200).json({
             message: `Usuario registrado correctamente`,
-            user: newUser
+            user: {
+                id:newUser.id,
+                fullname:newUser.fullname,
+                email:newUser.email,
+            }
         })
     } catch (error) {
         res.status(404).json({
